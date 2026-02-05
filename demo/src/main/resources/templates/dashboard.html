@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Dashboard - Student Management')}"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Student Management System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f6fa; min-height: 100vh; }
+        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .navbar-brand { color: white; font-size: 1.5rem; font-weight: bold; text-decoration: none; }
+        .navbar-nav { display: flex; gap: 1rem; list-style: none; align-items: center; }
+        .navbar-nav a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s; }
+        .navbar-nav a:hover { background: rgba(255,255,255,0.2); }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .welcome-card { background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 2rem; margin-bottom: 2rem; text-align: center; }
+        .welcome-card h1 { color: #333; margin-bottom: 0.5rem; }
+        .welcome-card p { color: #666; }
+        .badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        .badge-teacher { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .badge-student { background: #28a745; color: white; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .dashboard-card { background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 1.5rem; text-align: center; transition: transform 0.3s, box-shadow 0.3s; text-decoration: none; color: inherit; }
+        .dashboard-card:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.15); }
+        .dashboard-card .icon { font-size: 3rem; margin-bottom: 1rem; }
+        .dashboard-card h3 { color: #333; margin-bottom: 0.5rem; }
+        .dashboard-card p { color: #666; font-size: 0.9rem; }
+        .logout-form { display: inline; }
+        .logout-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; font-size: 1rem; }
+        .logout-btn:hover { background: rgba(255,255,255,0.3); }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">📚 Student Management</a>
+        <ul class="navbar-nav">
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li sec:authorize="hasRole('TEACHER')"><a href="/students">Students</a></li>
+            <li sec:authorize="hasRole('TEACHER')"><a href="/teachers">Teachers</a></li>
+            <li sec:authorize="hasRole('TEACHER')"><a href="/departments">Departments</a></li>
+            <li><a href="/courses">Courses</a></li>
+            <li sec:authorize="hasRole('STUDENT')"><a href="/students/profile">My Profile</a></li>
+            <li>
+                <form th:action="@{/logout}" method="post" class="logout-form">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="welcome-card">
+            <h1>Welcome, <span th:text="${username}">User</span>!</h1>
+            <p>
+                Role: 
+                <span th:if="${role == 'ROLE_TEACHER'}" class="badge badge-teacher">Teacher</span>
+                <span th:if="${role == 'ROLE_STUDENT'}" class="badge badge-student">Student</span>
+            </p>
+        </div>
+
+        <!-- Teacher Dashboard -->
+        <div sec:authorize="hasRole('TEACHER')" class="dashboard-grid">
+            <a href="/students" class="dashboard-card">
+                <div class="icon">👨‍🎓</div>
+                <h3>Manage Students</h3>
+                <p>Create, view, edit and delete student profiles</p>
+            </a>
+            <a href="/teachers" class="dashboard-card">
+                <div class="icon">👨‍🏫</div>
+                <h3>Manage Teachers</h3>
+                <p>Create, view, edit and delete teacher profiles</p>
+            </a>
+            <a href="/departments" class="dashboard-card">
+                <div class="icon">🏛️</div>
+                <h3>Manage Departments</h3>
+                <p>Create, view, edit and delete departments</p>
+            </a>
+            <a href="/courses" class="dashboard-card">
+                <div class="icon">📖</div>
+                <h3>Manage Courses</h3>
+                <p>Create, view, edit and delete courses</p>
+            </a>
+        </div>
+
+        <!-- Student Dashboard -->
+        <div sec:authorize="hasRole('STUDENT')" class="dashboard-grid">
+            <a href="/students/profile" class="dashboard-card">
+                <div class="icon">👤</div>
+                <h3>My Profile</h3>
+                <p>View and update your profile information</p>
+            </a>
+            <a href="/courses" class="dashboard-card">
+                <div class="icon">📖</div>
+                <h3>View Courses</h3>
+                <p>Browse available courses and enroll</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
