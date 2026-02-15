@@ -18,9 +18,10 @@ on:
 jobs:
   # Job name: build-and-test
   build-and-test:
-    # Run on Ubuntu (Linux) virtual machine
     runs-on: ubuntu-latest
     
+
+
     # Set working directory to demo folder (where pom.xml is located)
     defaults:
       run:
