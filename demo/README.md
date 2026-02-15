@@ -1,9 +1,12 @@
 # Student Management System
 
+[![CI Status](https://img.shields.io/badge/CI-GitHub%20Actions-blue)](../../actions)
+
 A comprehensive web-based Student Management System built with **Spring Boot 4.0**, **Spring Security**, **Thymeleaf**, and **PostgreSQL**. This application provides role-based access control for managing students, teachers, courses, and departments.
 
 ## 📋 Table of Contents
 
+- [CI/CD](#cicd)
 - [Features](#features)
 - [Technology Stack](#technology-stack)
 - [Prerequisites](#prerequisites)
@@ -14,6 +17,22 @@ A comprehensive web-based Student Management System built with **Spring Boot 4.0
 - [Database Schema](#database-schema)
 - [Security & Authorization](#security--authorization)
 - [File Descriptions](#file-descriptions)
+
+---
+
+## 🔄 CI/CD
+
+This project uses **GitHub Actions** for Continuous Integration. Every push and pull request automatically:
+- ✅ Builds the project
+- ✅ Runs all unit tests
+- ✅ Generates test reports
+- ✅ Validates code quality
+
+**Workflow File**: [.github/workflows/ci.yml](.github/workflows/ci.yml)  
+**Documentation**: See [CI_DOCUMENTATION.md](CI_DOCUMENTATION.md) for detailed explanation
+
+### Build Status
+Check the [Actions tab](../../actions) to see the latest build status and test results.
 
 ---
 

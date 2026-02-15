@@ -21,6 +21,11 @@ jobs:
     # Run on Ubuntu (Linux) virtual machine
     runs-on: ubuntu-latest
     
+    # Set working directory to demo folder (where pom.xml is located)
+    defaults:
+      run:
+        working-directory: demo
+    
     steps:
     # Step 1: Check out the repository code
     - name: Checkout code
@@ -33,6 +38,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'  # Eclipse Temurin (formerly AdoptOpenJDK)
         cache: maven  # Cache Maven dependencies for faster builds
+        cache-dependency-path: 'demo/pom.xml'  # Path to pom.xml for cache
         
     # Step 3: Build the project and run tests
     - name: Build with Maven
@@ -48,7 +54,7 @@ jobs:
       if: always()  # Run even if previous steps fail
       with:
         name: Maven Test Results
-        path: target/surefire-reports/*.xml
+        path: demo/target/surefire-reports/*.xml
         reporter: java-junit
         fail-on-error: true
         
@@ -58,5 +64,5 @@ jobs:
       if: always()  # Run even if tests fail
       with:
         name: test-reports
-        path: target/surefire-reports/
+        path: demo/target/surefire-reports/
         retention-days: 30  # Keep reports for 30 days
