@@ -15,6 +15,7 @@ public class Student extends User {
 
     private String studentId;
 
+    @Column(name = "student_year")
     private Integer year;
 
     private String address;
